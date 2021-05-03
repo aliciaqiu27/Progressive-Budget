@@ -43,36 +43,27 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
     if (event.request.url.includes("/api/transaction")) {
         evt.respondWith(
-            caches.open(RUNTIMECACHE).then((cachedResponse) => {
+            caches.open(RUNTIMECACHE).then((cache) => {
                 return fetch(evt.request)
-                .then(response => {
-                    if (response.status === 200) {
-                        cache.put(evt.request.url, response.clone());
-                    }
-                    
-                    return response;                    
-                })
-                .catch(err => {
-                    return cache.match(evt.request);
-                });
+                    //if the response is acceptable, it's cloned and stored in the cache.
+                    .then(response => {
+                        if (response.status === 200) {
+                            cache.put(evt.request.url, response.clone());
+                        }
+                        //If network request fails, response is obtained from the cache.
+                        return response;
+                    })
+                    .catch(err => {
+                        return cache.match(evt.request);
+                    });
             }).catch(err => console.log(err))
-        )
-    };
+        );
+        return;
+    }
+    evt.respondWith(
+        caches.match(evt.request).then(function (response) {
+            return response || fetch(evt.request);
+        })
+    );
 });
 
-
-                // if (cachedResponse) {
-                //     return cachedResponse;
-                // }
-
-                // return caches.open(RUNTIME).then((cache) => {
-                //     return fetch(event.request).then((response) => {
-                //         return cache.put(event.request, response.clone()).then(() => {
-                //             return response;
-                //         });
-                //     });
-                // });
-            // })
-//         );
-//     }
-// });

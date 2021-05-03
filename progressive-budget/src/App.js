@@ -1,26 +1,36 @@
 import logo from './logo.svg';
 import './App.css';
-import Cars from "./models/public/index.js"
+import index from "../"
+import index from ""
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
+function App() {
+    return (
+        <div>
+            <Router>
+
+
+                <Wrapper>
+
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <Route path="/signup" component={SignUp} />
+                        <Route path="/login" component={Login} />
+
+                        <Route path="/cars" exact component={Cars} />
+                        <Route path="/buying" component={Buying} />
+                        <Route path="/selling" component={Selling} />
+                        <Route path="/accessorize" component={Accessorize} />
+                        <Route path="/forum" component={Forum} />
+                        <Route path="/maintenance" component={Maintenance} />
+                        <Route path="/history" component={History} />
+                    </Switch>
+
+                </Wrapper>
+
+            </Router>
+
+        </div>
+    );
+}
 
 export default App;
