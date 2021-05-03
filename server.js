@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 //requires function and executing it at the same time
-require("./routing/html-routes.js")(app);
+app.use(require("./routes/api"));
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/progressive-budget-db", {
     useNewUrlParser: true,
